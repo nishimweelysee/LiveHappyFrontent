@@ -23,7 +23,7 @@ class Footer_v2 extends Component {
 		    <div className="container">
 		      <div className="row">
 		        <div className="col-lg-6 col-md-4">
-		          <a href="index.html"><img src={publicUrl+"assets/img/logo.png"} alt="img" /></a>
+		          <a href="index.html"><img className="h-20" src={publicUrl+"assets/img/logo.png"} alt="img" /></a>
 		        </div>
 		        <div className="col-lg-6 col-md-8 text-md-right mt-3 mt-md-0">
 		          <ul className="social-area">
@@ -91,7 +91,7 @@ class Footer_v2 extends Component {
 		    <div className="container">
 		      <div className="row">
 		        <div className="col-lg-6 align-self-center">
-		          <p>©2021, Copy Right By Solverwp. All Rights Reserved</p>
+		          <p>©2021, Copy Right By LiveHappy. All Rights Reserved</p>
 		        </div>
 		        <div className="col-lg-6 text-lg-right">
 		          <ul>

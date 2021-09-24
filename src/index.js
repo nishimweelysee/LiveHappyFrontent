@@ -16,36 +16,40 @@ import Contact from './components/contact';
 import Blog from './components/blog';
 import BlogDetails from './components/blog-details';
 
+//Dashboard
+
+import landlordDashboard from './components/dashboard/landlord-dashboard';
 
 
 
 class Root extends Component {
     render() {
-        return(
-                <HashRouter basename="/">
-	                <div>
-	                <Switch>
+        return (
+            <HashRouter basename="/">
+                <div>
+                    <Switch>
                         <Route exact path="/" component={HomeV1} />
-                        <Route  path="/home-v2" component={HomeV2} />
-                        <Route  path="/home-v3" component={HomeV3} />
-                        <Route  path="/property-details" component={ProptertyDetails} />
-                        <Route  path="/property-grid" component={ProptertyGrid} />
-                        <Route  path="/property" component={Propterty} />
-                        <Route  path="/about" component={About} />
-                        <Route  path="/team" component={Team} />
-                        <Route  path="/sign-in" component={SignIn} />
-                        <Route  path="/sign-up" component={SignUp} />
-                        <Route  path="/add-property" component={AddProperty} />
-                        <Route  path="/contact" component={Contact} />
-                        <Route  path="/blog" component={Blog} />
-	                    <Route  path="/blog-details" component={BlogDetails} />
-	                </Switch>
-	                </div>
-                </HashRouter>
+                        <Route path="/home-v2" component={HomeV2} />
+                        <Route path="/home-v3" component={HomeV3} />
+                        <Route path="/property-details" component={ProptertyDetails} />
+                        <Route path="/property-grid" component={ProptertyGrid} />
+                        <Route path="/property" component={Propterty} />
+                        <Route path="/about" component={About} />
+                        <Route path="/team" component={Team} />
+                        <Route path="/sign-in" component={SignIn} />
+                        <Route path="/sign-up" component={SignUp} />
+                        <Route path="/add-property" component={AddProperty} />
+                        <Route path="/contact" component={Contact} />
+                        <Route path="/blog" component={Blog} />
+                        <Route path="/blog-details" component={BlogDetails} />
+                        <Route path="/my-dashboard" component={landlordDashboard} />
+                    </Switch>
+                </div>
+            </HashRouter>
         )
     }
 }
 
 export default Root;
 
-ReactDOM.render(<Root />, document.getElementById('mingrand'));
+ReactDOM.render(<Root />, document.getElementById('livehappy'));

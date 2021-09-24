@@ -19,14 +19,12 @@ const Home_V1 = () => {
         <Banner />
         <Service />
         <Product />
-        <Video />
         <ProductV2 />
         <Testimonial />
         <Property />
         <Cta />
         <Agent />
         <Client />
-        <LatestNews />
         <Footer />
     </div>
 }

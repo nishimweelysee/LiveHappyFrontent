@@ -15,6 +15,7 @@ class PropertyPage extends Component {
     render() {
 
         let publicUrl = process.env.PUBLIC_URL+'/'
+		let imagealt = 'image'
 
     return <div className="blog-page-area pd-top-120 go-top">
 			  <div className="container">
@@ -36,9 +37,9 @@ class PropertyPage extends Component {
 			            <div className="col-md-3 mt-2 mt-md-0 align-self-center">
 			              <div className="single-select-inner">
 			                <select>
-			                  <option value={1}>Sort By</option>
-			                  <option value={2}>Sort By</option>
-			                  <option value={3}>Sort By</option>
+			                  <option value={1}>Sorty by</option>
+			                  <option value={2}>Title</option>
+			                  <option value={3}>Best</option>
 			                </select>
 			              </div>
 			            </div>
@@ -321,15 +322,72 @@ class PropertyPage extends Component {
 			          </ul>
 			        </div>
 			      </div>
+				  <div className="col-xl-3 col-lg-4">
+              <div className="widget widget-owner-info mt-lg-0 mt-5">
+                <div className="owner-info text-center">
+                  <div className="thumb">
+                    <img src={ publicUrl+"/assets/img/news/21.png"} alt={ imagealt } />
+                  </div>
+                  <div className="details">
+                    <h6>Jesse Edwards</h6>
+                    <span className="designation">Building Owner</span>
+                    <p className="reviews"><i className="fa fa-star" /><span>4.8</span> 70 Review</p>
+                  </div>
+                </div>
+                <div className="contact">
+                  <h6>Contact Us</h6>
+                  <div className="rld-single-input">
+                    <input type="text" placeholder="Full Name" />
+                  </div>
+                  <div className="rld-single-input">
+                    <input type="text" placeholder="Email" />
+                  </div>
+                  <div className="rld-single-input">
+                    <input type="text" placeholder="Messages" />
+                  </div>
+                  <a className="btn btn-yellow" href="#">Send Messages</a>
+                </div>
+                <div className="contact-info">
+                  <h6 className="mb-3">Contact Info</h6>
+                  <div className="media">
+                    <div className="media-left">
+                      <img src={ publicUrl+"/assets/img/icons/1.png"} alt={ imagealt } />
+                    </div>
+                    <div className="media-body">
+                      <p>Address</p>
+                      <span>Long Island, NY 11355, USA</span>
+                    </div>
+                  </div>
+                  <div className="media">
+                    <div className="media-left">
+                      <i className="fa fa-phone" />
+                    </div>
+                    <div className="media-body">
+                      <p>Phone</p>
+                      <span>+00 111 222 333</span>
+                    </div>
+                  </div>
+                  <div className="media mb-0">
+                    <div className="media-left">
+                      <i className="fa fa-envelope" />
+                    </div>
+                    <div className="media-body">
+                      <p>Email</p>
+                      <span>info@example.com</span>
+                    </div>
+                  </div>
+                </div>
+				</div>
+				</div>
 			      <div className="col-lg-4">
 			        <aside className="sidebar-area">
 			          <div className="widget widget-author text-center">
-			            <h4 className="widget-title">About Me</h4>
+			            <h4 className="widget-title">House Owner</h4>
 			            <div className="thumb">
 			              <img src={publicUrl+"assets/img/agent/1.png"} alt="img" />
 			            </div> 
 			            <div className="details">
-			              <h5>Sandara Mrikon</h5>
+			              <h5>Nishimwe Elysee</h5>
 			              <p>Lorem ipsum dolor amet, Lore ipsum dolor sit amet, consectetur et  eiLorem ipsum dolor sit amet</p>
 			              <ul>
 			                <li><a href="#"><i className="fab fa-facebook-f" aria-hidden="true" /></a></li>

@@ -18,7 +18,7 @@ class NavbarV2 extends Component {
 				        </button>
 				      </div>
 				      <div className="logo">
-				        <Link to="/"><img src={publicUrl+"assets/img/logo.png"} alt="img" /></Link>
+				        <Link to="/"><img className="h-20" src={publicUrl+"assets/img/logo.png"} alt="img" /></Link>
 				      </div>
 				      <div className="nav-right-part nav-right-part-mobile">
 				        <Link className="btn btn-base" to="/add-property">Submit</Link>

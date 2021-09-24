@@ -14,7 +14,7 @@ class Banner extends Component {
 			      <div className="row justify-content-center">
 			        <div className="col-lg-8">
 			          <div className="banner-inner text-center">
-			            <p>Lorem ipsum dolor sit amet, consecteLorem ipsum dolor sit amet,</p>
+			            <p>we wish you to live a happy life with live happy where every one his beuty home with best Good Behaiour landlords</p>
 			            <div className="line" />
 			            <h2>The Best Way To Find Your Perfect Home</h2>
 			          </div>
@@ -26,19 +26,19 @@ class Banner extends Component {
 			                <div className="single-select-inner">
 			                  <select>
 			                    <option>Location</option>
-			                    <option value={1}>Location 1</option>
-			                    <option value={2}>Location 2</option>
-			                    <option value={3}>Location 3</option>
+			                    <option value={1}>Nyarugenge</option>
+			                    <option value={2}>Kicukro</option>
+			                    <option value={3}>Gasabo</option>
 			                  </select>
 			                </div>
 			              </div>
 			              <div className="col-md-3">
 			                <div className="single-select-inner">
 			                  <select>
-			                    <option>Property</option>
-			                    <option value={1}>Property 1</option>
-			                    <option value={2}>Property 2</option>
-			                    <option value={3}>Property 3</option>
+			                    <option>House</option>
+			                    <option value={1}>Etaje</option>
+			                    <option value={2}>Cadasteri</option>
+			                    <option value={3}>Apartiment</option>
 			                  </select>
 			                </div>
 			              </div>
@@ -46,9 +46,9 @@ class Banner extends Component {
 			                <div className="single-select-inner">
 			                  <select>
 			                    <option>Price</option>
-			                    <option value={1}>Price</option>
-			                    <option value={2}>Price</option>
-			                    <option value={3}>Price</option>
+			                    <option value={1}>less - 500000 Rwf</option>
+			                    <option value={2}>500000 Rwf - 1200000 Rwf</option>
+			                    <option value={3}>1200000 Rwf - above</option>
 			                  </select>
 			                </div>
 			              </div>

@@ -14,7 +14,7 @@ class Client extends Component {
               <div className="row justify-content-center text-lg-left text-center">
                 <div className="col-lg-9">
                   <div className="section-title style-white mb-0">
-                    <h6>Buy Or Sell</h6>
+                    <h6>Rent</h6>
                     <h2>Find Best Place For Leaving</h2>
                     <p>Lorem ipsum dolor  amet, consecteLorem ipsum dolor sit amet, consectetur adipisicing sed do eiusmod tempor incididunt dolore magna consecteLorem ipsum dolor sit amet, consectetur adipisicing elit,</p>
                   </div>
@@ -25,36 +25,7 @@ class Client extends Component {
               </div>
             </div>
           </div>
-          <div className="container">
-            <div className="client-slider bg-main style-two owl-carousel">
-              <div className="item">
-                <div className="thumb">
-                  <img src={publicUrl+"assets/img/client/2.png"} alt="img" />
-                </div>
-              </div>
-              <div className="item">
-                <div className="thumb">
-                  <img src={publicUrl+"assets/img/client/3.png"} alt="img" />
-                </div>
-              </div>
-              <div className="item">
-                <div className="thumb">
-                  <img src={publicUrl+"assets/img/client/4.png"} alt="img" />
-                </div>
-              </div>
-              <div className="item">
-                <div className="thumb">
-                  <img src={publicUrl+"assets/img/client/5.png"} alt="img" />
-                </div>
-              </div>
-              <div className="item">
-                <div className="thumb">
-                  <img src={publicUrl+"assets/img/client/2.png"} alt="img" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+    </div>
 
         }
 }

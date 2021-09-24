@@ -18,7 +18,7 @@ class NavbarV3 extends Component {
 			        </button>
 			      </div>
 			      <div className="logo">
-			        <Link to="/"><img src={publicUrl+"assets/img/logo.png" } alt="img" /></Link>
+			        <Link to="/">LiveHappy</Link>
 			      </div>
 			      <div className="nav-right-part nav-right-part-mobile">
 			        <Link className="btn btn-base" to="/add-property">Submit</Link>
