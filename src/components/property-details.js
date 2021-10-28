@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from './global-components/navbar-v2';
 import PageHeader from './global-components/page-header';
 import PropertyDetailsPage from './section-components/property-details';
-import Footer from './global-components/footer';
+import Footer from './global-components/footer-v2';
 
 const PropertyDetails = () => {
     return <div>

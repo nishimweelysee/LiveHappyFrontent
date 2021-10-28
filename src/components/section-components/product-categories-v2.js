@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import parse from 'html-react-parser';
 
 class ProductCategoriesV2 extends Component {
 
@@ -26,7 +25,7 @@ class ProductCategoriesV2 extends Component {
 			            <Link className="read-more float-right" to="/property"><i className="la la-arrow-right" /></Link>
 			          </div>
 			        </div>
-			      </div>  
+			      </div>
 			      <div className="col-lg-4 col-sm-6">
 			        <div className="single-category-product-wrap style-two">
 			          <div className="thumb">
@@ -38,7 +37,7 @@ class ProductCategoriesV2 extends Component {
 			            <Link className="read-more float-right" to="/property"><i className="la la-arrow-right" /></Link>
 			          </div>
 			        </div>
-			      </div> 
+			      </div>
 			      <div className="col-lg-4 col-sm-6">
 			        <div className="single-category-product-wrap style-two">
 			          <div className="thumb">
@@ -50,7 +49,7 @@ class ProductCategoriesV2 extends Component {
 			            <Link className="read-more float-right" to="/property"><i className="la la-arrow-right" /></Link>
 			          </div>
 			        </div>
-			      </div>   
+			      </div>
 			      <div className="col-lg-4 col-sm-6">
 			        <div className="single-category-product-wrap style-two">
 			          <div className="thumb">
@@ -62,7 +61,7 @@ class ProductCategoriesV2 extends Component {
 			            <Link className="read-more float-right" to="/property"><i className="la la-arrow-right" /></Link>
 			          </div>
 			        </div>
-			      </div>  
+			      </div>
 			      <div className="col-lg-4 col-sm-6">
 			        <div className="single-category-product-wrap style-two">
 			          <div className="thumb">
@@ -74,7 +73,7 @@ class ProductCategoriesV2 extends Component {
 			            <Link className="read-more float-right" to="/property"><i className="la la-arrow-right" /></Link>
 			          </div>
 			        </div>
-			      </div>   
+			      </div>
 			      <div className="col-lg-4 col-sm-6">
 			        <div className="single-category-product-wrap style-two">
 			          <div className="thumb">
@@ -86,7 +85,7 @@ class ProductCategoriesV2 extends Component {
 			            <Link className="read-more float-right" to="/property"><i className="la la-arrow-right" /></Link>
 			          </div>
 			        </div>
-			      </div> 
+			      </div>
 			    </div>
 			  </div>
 			</div>

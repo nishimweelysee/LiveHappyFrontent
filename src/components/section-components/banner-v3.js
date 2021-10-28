@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import parse from 'html-react-parser';
 
 class BannerV3 extends Component {
 
@@ -45,7 +43,7 @@ class BannerV3 extends Component {
 			            </div>
 			          </div>
 			          <div className="col-lg-2 col-sm-6 mt-lg-0 mt-md-2 mt-0">
-			            <a className="btn btn-white-border w-100" href="#"><i className="fa fa-search mr-1" /> Search</a>
+			            <button className="btn btn-white-border w-100" ref="#"><i className="fa fa-search mr-1" /> Search</button>
 			          </div>
 			        </div>
 			      </form>

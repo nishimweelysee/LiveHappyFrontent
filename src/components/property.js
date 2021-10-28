@@ -7,7 +7,7 @@ import Footer from './global-components/footer-v2';
 const PropertyPage = () => {
     return <div>
         <Navbar />
-        <PageHeader headertitle="Property"  />
+        <PageHeader headertitle="Houses"  />
         <Property />
         <Footer />
     </div>

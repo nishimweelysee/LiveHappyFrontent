@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import parse from 'html-react-parser';
 
 class About extends Component {
 
@@ -38,8 +36,8 @@ class About extends Component {
                               <li>Lorem ipsum dolor manga</li>
                             </ul>
                           </div>
-                        </div>  
-                        <a className="btn btn-base" href="#">SEE MORE</a>
+                        </div>
+                        <button className="btn btn-base">SEE MORE</button>
                       </div>
                     </div>
                   </div>

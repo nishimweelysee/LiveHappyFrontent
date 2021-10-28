@@ -7,7 +7,7 @@ import Footer from './global-components/footer-v2';
 const PropertGridPage = () => {
     return <div>
         <Navbar />
-        <PageHeader headertitle="Property Grid"  />
+        <PageHeader headertitle="Category"  />
         <PropertyGrid />
         <Footer />
     </div>

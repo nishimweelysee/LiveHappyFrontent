@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import parse from 'html-react-parser';
 
 class Testimonial extends Component {
 
@@ -11,7 +9,7 @@ class Testimonial extends Component {
     return <div className="testimonial-area pd-top-118 pd-bottom-120 bg-overlay" style={{background: 'url('+publicUrl+'assets/img/bg/2.png)'}}>
 			  <div className="bg-overlay-wrap">
 			    <div className="section-title style-white text-center">
-			      <h6>Our Testomonial </h6>
+			      <h6>Our Testimonial </h6>
 			      <h2>What Client Say</h2>
 			      <p>Lorem ipsum dolor  amet, consectetur adipisicing elit Lorem ipsum dolor sit amet, </p>
 			    </div>

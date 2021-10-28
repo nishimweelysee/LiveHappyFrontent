@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import parse from 'html-react-parser';
 
 class ProductCategories extends Component {
 
@@ -25,7 +24,7 @@ class ProductCategories extends Component {
 			            <Link className="btn btn-base" to="/property">3 Porparties</Link>
 			          </div>
 			        </div>
-			      </div>  
+			      </div>
 			      <div className="col-lg-4 col-sm-6">
 			        <div className="single-category-product-wrap style-two text-center">
 			          <div className="thumb">
@@ -36,7 +35,7 @@ class ProductCategories extends Component {
 			            <Link className="btn btn-base" to="/property">6 Porparties</Link>
 			          </div>
 			        </div>
-			      </div> 
+			      </div>
 			      <div className="col-lg-4 col-sm-6">
 			        <div className="single-category-product-wrap style-two text-center">
 			          <div className="thumb">
@@ -47,7 +46,7 @@ class ProductCategories extends Component {
 			            <Link className="btn btn-base" to="/property">2 Porparties</Link>
 			          </div>
 			        </div>
-			      </div>   
+			      </div>
 			      <div className="col-lg-4 col-sm-6">
 			        <div className="single-category-product-wrap style-two text-center">
 			          <div className="thumb">
@@ -58,7 +57,7 @@ class ProductCategories extends Component {
 			            <Link className="btn btn-base" to="/property">1 Porparties</Link>
 			          </div>
 			        </div>
-			      </div>  
+			      </div>
 			      <div className="col-lg-4 col-sm-6">
 			        <div className="single-category-product-wrap style-two text-center">
 			          <div className="thumb">
@@ -69,7 +68,7 @@ class ProductCategories extends Component {
 			            <Link className="btn btn-base" to="/property">2 Porparties</Link>
 			          </div>
 			        </div>
-			      </div>   
+			      </div>
 			      <div className="col-lg-4 col-sm-6">
 			        <div className="single-category-product-wrap style-two text-center">
 			          <div className="thumb">
@@ -80,7 +79,7 @@ class ProductCategories extends Component {
 			            <Link className="btn btn-base" to="/property">1 Porparties</Link>
 			          </div>
 			        </div>
-			      </div> 
+			      </div>
 			    </div>
 			  </div>
 			</div>

@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import {connect} from "react-redux";
+import {handleLogout, redirectUser} from "../helpers/functions";
 
-class Navbar extends Component {
+const Navbar =(props)=> {
 
-    render() {
         let publicUrl = process.env.PUBLIC_URL+'/'
-        let imgattr = 'logo'
-        let anchor = '#'
+
         return (
         	<div className="navbar-area navbar-area-1">
 			  {/* navbar top start */}
@@ -22,15 +22,16 @@ class Navbar extends Component {
 			        <div className="col-lg-4">
 			          <ul className="topbar-right text-lg-right text-center">
 			            <li>
-			              <Link className="ml-0" to="/sign-up">Register</Link>
-			              <Link to="/sign-in">Login</Link>
+							{!props.user.isLoggedIn && <Link className="ml-0" to="/sign-up">Register</Link>}
+							{!props.user.isLoggedIn &&<Link to="/sign-in">Login</Link>}
+							{props.user.isLoggedIn &&<Link onClick={e=>handleLogout()} to="">Logout</Link>}
 			            </li>
 			            <li className="social-area">
-			              <a href="https://www.facebook.com/solverwp/"><i className="fab fa-facebook-f" aria-hidden="true" /></a>
-			              <a href="https://www.twitter.com/solverwp/"><i className="fab fa-twitter" aria-hidden="true" /></a>
-			              <a href="https://www.instagram-plus.com/solverwp/"><i className="fab fa-instagram" aria-hidden="true" /></a>
-			              <a href="https://www.skype.com/solverwp/"><i className="fab fa-skype" aria-hidden="true" /></a>
-			              <a href="https://www.pinterest.com/solverwp/"><i className="fab fa-pinterest-p" aria-hidden="true" /></a>
+			              <a href="https://www.facebook.com"><i className="fab fa-facebook-f" aria-hidden="true" /> </a>
+			              <a href="https://www.twitter.com"><i className="fab fa-twitter" aria-hidden="true" /> </a>
+			              <a href="https://www.instagram-plus.com"><i className="fab fa-instagram" aria-hidden="true" /> </a>
+			              <a href="https://www.skype.com"><i className="fab fa-skype" aria-hidden="true" /> </a>
+			              <a href="https://www.pinterest.com"><i className="fab fa-pinterest-p" aria-hidden="true" /> </a>
 			            </li>
 			          </ul>
 			        </div>
@@ -50,7 +51,7 @@ class Navbar extends Component {
 			      </div>
 			      <div className="nav-right-part nav-right-part-mobile">
 			        <ul>
-			          <li><a className="search" href="#"><i className="fa fa-search" /></a></li>
+			          <li><span className="search"><i className="fa fa-search" /></span></li>
 			          <li><Link className="btn btn-base" to="/add-property"><span className="btn-icon"><i className="fa fa-plus" /></span> <span className="btn-text">SUBMIT PROPERTY</span></Link></li>
 			        </ul>
 			      </div>
@@ -59,30 +60,25 @@ class Navbar extends Component {
 			          <li className="current-menu-item">
 			            <Link to="/">Home</Link>
 			          </li>
-			          <li className="menu-item-has-children current-menu-item">
-			            <Link to="/#">House</Link>
-			            <ul className="sub-menu">
-			              <li><Link to="/property">House</Link></li>
-			              <li><Link to="/property-grid">House Grid</Link></li>
-			              <li><Link to="/property-details">House Details</Link></li>
-			            </ul>
+			          <li className="current-menu-item">
+						  <Link to="/property-grid">House</Link>
 			          </li>
 			          <li className="menu-item-has-children current-menu-item">
-			            <a href="#">Links</a>
+			            <span>Quick Links</span>
 			            <ul className="sub-menu">
 			              <li><Link to="/about">About</Link></li>
-			              <li><Link to="/team">Team</Link></li>
 			              <li><Link to="/sign-in">Sign In</Link></li>
 			              <li><Link to="/sign-up">Sign Up</Link></li>
-			              <li><Link to="/add-property">Add Property</Link></li>
+			              <li><Link to="/add-property">Upload House</Link></li>
 			            </ul>
 			          </li>
 			          <li><Link to="/contact">Contact</Link></li>
+						{props.user.isLoggedIn && <li><Link onClick={redirectUser}>Dashboard</Link></li>}
 			        </ul>
 			      </div>
 			      <div className="nav-right-part nav-right-part-desktop">
 			        <ul>
-			          <li><a className="search" href="#"><i className="fa fa-search" /></a></li>
+			          <li><span className="search"><i className="fa fa-search" /></span></li>
 			          <li><Link className="btn btn-base" to="/add-property"><span className="btn-icon"><i className="fa fa-plus" /></span> <span className="btn-text">Upload House</span></Link></li>
 			        </ul>
 			      </div>
@@ -91,8 +87,12 @@ class Navbar extends Component {
 			</div>
 
         )
-    }
 }
 
+const mapStateToProps = state => {
+	return {
+		user: state.user,
+	}
+}
 
-export default Navbar
+export default connect(mapStateToProps)(Navbar)
