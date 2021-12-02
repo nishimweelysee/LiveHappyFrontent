@@ -60,17 +60,6 @@ class Footer_v2 extends Component {
 		            </ul>
 		          </div>
 		        </div>
-		        <div className="col-lg-2 col-md-6">
-		          <div className="widget widget_nav_menu">
-		            <h4 className="widget-title">Categories</h4>
-		            <ul>
-		              <li><Link to="/blog">Arts &amp; Design</Link></li>
-		              <li><Link to="/blog">Business</Link></li>
-		              <li><Link to="/blog">Computer Science</Link></li>
-		              <li><Link to="/blog">Data Science</Link></li>
-		            </ul>
-		          </div>
-		        </div>
 		        <div className="col-lg-4 col-md-6">
 		          <div className="widget widget_subscribe">
 		            <h4 className="widget-title">Newsletter</h4>
