@@ -8,7 +8,7 @@ const  AddProperty= (props)=> {
       const [house,setHouse] = useState({
         name:"",
         price:"",
-        houseCategory:"",
+        houseCategory:null,
         bedrooms:0,
         kitchens:0,
         livingRoom:0,
@@ -25,6 +25,7 @@ const  AddProperty= (props)=> {
         cell:"",
         street:""
       });
+      const [categories,setCategories] = useState([])
 
 
       let nameRef= useRef();let priceRef= useRef();let categoryRef= useRef();let bedroomsRef= useRef();let kitchensRef= useRef();let livingRoomRef= useRef();let bathroomsRef= useRef();let areaRef= useRef();let yearBuiltRef= useRef();let sqftRef= useRef();let imageRef= useRef();let descriptionRef= useRef();let districtRef= useRef();let sectorRef= useRef();let cellRef = useRef();let streetRef = useRef()
@@ -78,26 +79,15 @@ const  AddProperty= (props)=> {
         }
       }
 
-
-
-    const [categories,setCategories] = useState([])
     useEffect(()=>{
       async function fetchData() {
         const {response,error} = await httpRequest("GET","/api/category");
         if(!error){
           let data = response.data;
-          cogoToast.success(data.message);
           setCategories(data.data);
         }
       }
       fetchData();
-    },[])
-  const printMessage = (evt)=>{
-        console.log(evt)
-    console.log("Triggered")
-  }
-    useEffect(()=>{
-      document.getElementById('category').addEventListener('change', printMessage)
     },[])
     return <div className="add-property-area pd-top-120">
               <div className="container">
@@ -122,9 +112,9 @@ const  AddProperty= (props)=> {
                           <span className="label">Category</span>
                           <select id={"category"} ref={categoryRef}   value={house.houseCategory} onChange={handleInput} name={"houseCategory"}>
                             {
-                              categories.map((cat,index)=>{
-                                return <option key={index} value={cat.id}>{cat.name}</option>
-                              })
+                              categories.map((cat,index)=>(
+                                  <option key={index} value={cat.id}>{cat.name}</option>
+                              ))
                             }
                           </select>
                         </div>

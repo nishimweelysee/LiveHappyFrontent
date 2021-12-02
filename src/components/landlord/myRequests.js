@@ -73,12 +73,13 @@ function Row(props) {
 
     const getRates = async ()=>{
         const resp = await httpRequest('GET',`/api/rate/${tenant.id}`);
+        let rate = [];
         if(!resp.error){
-            let rates = resp.response.data.data;
-            setRates(rates)
+            rate = resp.response.data.data;
+            setRates(rate)
         }
-        let sum = _.sumBy(rates,'rates');
-        let avg =sum/rates.length;
+        let sum = _.sumBy(rate,'rates');
+        let avg =sum/rate.length;
         setValue(_.round(avg,1));
         saveRate(RATE,_.round(avg,1))
         if(avg>=4 &&avg <5)
@@ -91,12 +92,12 @@ function Row(props) {
             setBackCOlor("bg-warning");
         else
             setBackCOlor("bg-danger");
-        let fiv = _.countBy(rates,r=>r.rates>=4 && r.rates <5).true||0;
-        let fou = _.countBy(rates,r=>r.rates>=3 && r.rates <4).true||0;
-        let thre = _.countBy(rates,r=>r.rates>=2 && r.rates <3).true||0;
-        let tw = _.countBy(rates,r=>r.rates>=1 && r.rates <2).true||0;
-        let on = _.countBy(rates,r=>r.rates>=0 && r.rates <1).true||0;
-        let min = 100/rates.length;
+        let fiv = _.countBy(rate,r=>r.rates>=4 && r.rates <5).true||0;
+        let fou = _.countBy(rate,r=>r.rates>=3 && r.rates <4).true||0;
+        let thre = _.countBy(rate,r=>r.rates>=2 && r.rates <3).true||0;
+        let tw = _.countBy(rate,r=>r.rates>=1 && r.rates <2).true||0;
+        let on = _.countBy(rate,r=>r.rates>=0 && r.rates <1).true||0;
+        let min = 100/rate.length;
         setFive({...five,value: fiv,avg: _.round(fiv*min,0)});
         setFour({...four, value: fou,avg: _.round(fou*min,0)});
         setThree({...three,value: thre,avg: _.round(thre*min,0)});
@@ -231,7 +232,7 @@ function Row(props) {
                                         variant="circular"
                                         color="primary"
 
-                                        alt="Remy Sharp" src="/static/images/avatar/1.jpg" className={classes2.large} />
+                                        alt={tenant.fullName} src={tenant.image} className={classes2.large} />
                             </div>
                             <div className={"grid sm:grid-cols-2 grid-cols-1"}>
                                 <div className={"flex flex-col"}>

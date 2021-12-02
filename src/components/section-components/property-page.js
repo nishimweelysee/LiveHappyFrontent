@@ -86,7 +86,7 @@ const PropertyPage= ()=>{
 											<div className="product-wrap-details">
 												<div className="media">
 													<div className="author">
-														<img src={landLord.image||publicUrl+"assets/img/author/1.png"} alt="img" />
+														<img className={"h-12 w-12"} src={landLord.image||publicUrl+"assets/img/author/1.png"} alt="img" />
 													</div>
 													<div className="media-body">
 														<h6><Link to="/property-details">{landLord.fullName}</Link></h6>
@@ -99,9 +99,9 @@ const PropertyPage= ()=>{
 											<h4><Link to={`/property-details?id=${h.id}`}>{h.name}</Link></h4>
 											<ul className="meta-inner">
 												<li><img src={publicUrl+"assets/img/icon/location2.png"} alt="img" />{h.district}</li>
-												<li><Link to="/property-details">For Rent</Link></li>
+												<li><Link to={`/property-details?id=${h.id}`}>For Rent</Link></li>
 											</ul>
-											<p>{h.description} </p>
+											<p className={"break-words"}>{h.description} </p>
 											<span className="price">RWF {h.price} / Month</span>
 										</div>
 										<div className="product-meta-bottom style-2">

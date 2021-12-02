@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -11,6 +11,8 @@ import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {logoutAction} from '../../redux/user/user.actions'
 import {handleLogout} from "../helpers/functions";
+import {Link} from "react-router-dom";
+import {UserContext} from "../../context/UserContext";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -56,6 +58,7 @@ const StyledMenuItem = withStyles((theme) => ({
 }))(MenuItem);
 
 const CustomizedMenus=(props)=> {
+    const {user} = useContext(UserContext);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const classes = useStyles();
     const handleClick = (event) => {
@@ -65,6 +68,9 @@ const CustomizedMenus=(props)=> {
     const handleClose = () => {
         setAnchorEl(null);
     };
+    useEffect(()=>{
+        console.log(user)
+    },[])
 
     return (
         <div>
@@ -75,8 +81,8 @@ const CustomizedMenus=(props)=> {
                         variant="circular"
                         color="primary"
                         onClick={handleClick}
-                        alt="Remy Sharp" src="/static/images/avatar/1.jpg" className={classes.large} />
-                <h6 className={"m-auto text-white pl-4"}>{props.user.data.username}</h6>
+                        alt="Remy Sharp" src={user.image} className={classes.large} />
+                <h6 className={"m-auto text-white pl-4"}>{user.username}</h6>
             </div>
             <StyledMenu
                 id="customized-menu"
@@ -89,7 +95,7 @@ const CustomizedMenus=(props)=> {
                     <ListItemIcon>
                         <SupervisedUserCircle fontSize="small" />
                     </ListItemIcon>
-                    <ListItemText primary="Profile" />
+                    <ListItemText primary={<Link to={{pathname:"/profile"}}>Profile</Link>} />
                 </StyledMenuItem>
                 <StyledMenuItem>
                     <ListItemIcon>

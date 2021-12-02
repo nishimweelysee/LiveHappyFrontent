@@ -18,17 +18,12 @@ import PropTypes from "prop-types";
 import {makeStyles} from "@material-ui/core";
 import cogoToast from "cogo-toast";
 
-
-
-
-
 function ConfirmationDialogRaw(props) {
 	const { onCloseYes, token,  openYes,houseId,landlordId, ...other } = props;
 	const body = {
 		"landlordId":landlordId,
 		"houseId":houseId
 	}
-	console.log(body)
 
 	const handleCancel = () => {
 		onCloseYes();
@@ -113,35 +108,40 @@ const PropertyDetails =(props)=> {
 		street:"",
 		landLord:{}
 	});
-
-	useEffect(()=>{
-		const getHouse = async ()=>{
-			let id = new URLSearchParams(location.search).get("id");
-			const {response,error} = await  httpRequest("GET",`api/house/find?id=${id}`);
-			if(!error){
-				setHouse({...house,...response.data.data});
-				const {landLord} = response.data.data;
-				setLandLord(landLord)
-				const resp = await httpRequest('GET',`/api/rate/${landLord.id}`);
-				if(!resp.error){
-					let rates = resp.response.data.data;
-					setRates(rates)
-				}
-			}
-
-
-			const grep = await httpRequest("GET","/api/category");
-			if(!grep.error){
-				let data = grep.response.data;
-				setCategories(data.data);
-			}
-			const hresp=await httpRequest("GET",'/api/house');
-			if(!hresp.error){
-				let data =hresp.response.data.data
-				let filteredData = _.groupBy(data,'district')
-				setHouses({...filteredData});
+	const [comment,setComment] = useState({ fullName:"", email:"",message:""})
+	const [comments,setComments] = useState([])
+	const getHouse = async ()=>{
+		let id = new URLSearchParams(location.search).get("id");
+		setComment({...comment,house: id})
+		const {response,error} = await  httpRequest("GET",`api/house/find?id=${id}`);
+		if(!error){
+			setHouse({...house,...response.data.data});
+			const {comments} = response.data.data;
+			setComments(comments);
+			const {landLord} = response.data.data;
+			setLandLord(landLord)
+			const resp = await httpRequest('GET',`/api/rate/${landLord.id}`);
+			if(!resp.error){
+				let rates = resp.response.data.data;
+				setRates(rates)
 			}
 		}
+
+
+		const grep = await httpRequest("GET","/api/category");
+		if(!grep.error){
+			let data = grep.response.data;
+			setCategories(data.data);
+		}
+		const hresp=await httpRequest("GET",'/api/house');
+		if(!hresp.error){
+			let data =hresp.response.data.data
+			let filteredData = _.groupBy(data,'district')
+			setHouses({...filteredData});
+		}
+	}
+	useEffect(()=>{
+		getHouse()
 
 		 const $ = window.$;
 		 $( 'body' ).addClass( 'body-bg' );
@@ -194,7 +194,17 @@ const PropertyDetails =(props)=> {
 		</div>
 	}
 
-    return <div className="property-page-area pd-top-120 pd-bottom-90 ">
+	async  function handleSendComment(event) {
+		event.preventDefault();
+		const {response,error} = await  httpRequest("POST",`api/house/comment/${house.id}`,comment);
+		if(!error){
+			cogoToast.info(response.data.message);
+			setComment({...comment,fullName:"", email:"",message:""})
+			getHouse();
+		}
+	}
+
+	return <div className="property-page-area pd-top-120 pd-bottom-90 ">
 			  <div className="container">
 			    <div className="property-details-top pd-bottom-70">
 			      <div className="property-details-top-inner">
@@ -234,7 +244,7 @@ const PropertyDetails =(props)=> {
 					  </Carousel>
 				  </div>
 			    </div>
-			    <div className="row go-top">
+			    <div className="row">
 			      <div className="col-lg-8">
 			        <div className="single-property-details-inner">
 			          <h4>{house.category}</h4>
@@ -295,6 +305,18 @@ const PropertyDetails =(props)=> {
 			          </div>
 			          <form className="single-property-comment-form">
 			            <div className="single-property-grid bg-black">
+							<div className={"max-h-80 overflow-scroll"}>
+								{
+									comments.map((comment,index)=>(
+										<div key={index} className={"m-2"}>
+											<div className={"p-4 bg-white rounded flex flex-col gap-4"}>
+												<h3 className={"bg-gray-200 p-2"}>{comment.fullName}</h3>
+												<p>{comment.message}</p>
+											</div>
+										</div>
+									))
+								}
+							</div>
 			              <div className="single-property-form-title">
 			                <div className="row">
 			                  <div className="col-md-8">
@@ -309,23 +331,23 @@ const PropertyDetails =(props)=> {
 			                <div className="col-lg-6">
 			                  <label className="single-input-inner style-bg">
 			                    <span className="label">Enter Your Name</span>
-			                    <input type="text" placeholder="Your name here...." />
+			                    <input type="text" value={comment.fullName || ""} onChange={e=>setComment({...comment,fullName: e.target.value})} placeholder="Your name here...." />
 			                  </label>
 			                </div>
 			                <div className="col-lg-6">
 			                  <label className="single-input-inner style-bg">
 			                    <span className="label">Enter Your MAil</span>
-			                    <input type="text" placeholder="Your email here...." />
+			                    <input type="text" value={comment.email || ""} onChange={e=>setComment({...comment,email: e.target.value})} placeholder="Your email here...." />
 			                  </label>
 			                </div>
 			                <div className="col-12">
 			                  <label className="single-input-inner style-bg">
-			                    <span className="label">Enter Your Messege</span>
-			                    <textarea placeholder="Enter your messege here...." defaultValue={""} />
+			                    <span className="label">Enter Your Message</span>
+			                    <textarea value={comment.message || ""} onChange={e=>setComment({...comment,message: e.target.value})} placeholder="Enter your messege here...." defaultValue={""} />
 			                  </label>
 			                </div>
 			                <div className="col-12 mb-4">
-			                  <button className="btn btn-base radius-btn">Submit Now</button>
+			                  <button  onClick={handleSendComment} className="btn btn-base radius-btn">Submit Now</button>
 			                </div>
 			              </div>
 			            </div>

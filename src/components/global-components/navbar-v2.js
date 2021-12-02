@@ -1,11 +1,31 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import {handleLogout, redirectUser} from "../helpers/functions";
+import React, {useEffect, useState} from 'react';
+import {Link, useHistory} from 'react-router-dom';
+import {handleLogout} from "../helpers/functions";
 import {connect} from "react-redux";
+import {decodeToken} from "../../config/decodeToken";
 
 const  NavbarV2 = (props) =>{
-
         let publicUrl = process.env.PUBLIC_URL+'/'
+	const [link,setLink] = useState("");
+		useEffect(()=> {
+			let role = decodeToken();
+			switch (role) {
+				case "ROLE_ADMIN":
+					setLink("/admin");
+					break;
+				case "ROLE_LANDLORD":
+					setLink("/landlord")
+					break;
+				case "ROLE_TENANT":
+					setLink("/tenant");
+					break;
+				case "ROLE_COMMISSIONER":
+					setLink("/commissioner");
+					break;
+				default:
+					setLink("/");
+			}
+		},[])
         return (
         	<div className="navbar-area navbar-area-3">
 				  <nav className="navbar navbar-expand-lg">
@@ -28,7 +48,7 @@ const  NavbarV2 = (props) =>{
 				            <Link to="/">Home</Link>
 				          </li>
 				          <li className="current-menu-item">
-							  <Link to="/property-grid">House</Link>
+							  <Link to="/find">House</Link>
 				          </li>
 				          <li className="menu-item-has-children current-menu-item">
 				            <span>Quick Links</span>
@@ -41,12 +61,12 @@ const  NavbarV2 = (props) =>{
 				          </li>
 				          <li><Link to="/contact">Contact</Link></li>
 							{props.user.isLoggedIn && <li><Link onClick={e=>handleLogout()} to={""}>Logout</Link></li>}
-							{props.user.isLoggedIn && <li><Link onClick={redirectUser} to={""}>Dashboard</Link></li>}
+							{props.user.isLoggedIn && <li><Link to={link}>Dashboard</Link></li>}
 				        </ul>
 				      </div>
 				      <div className="nav-right-part nav-right-part-desktop">
 				        <ul>
-				          <li><span className="search"><i className="fa fa-search" /></span></li>
+				          <li><Link to={"/find"}><i className="fa fa-search" /></Link></li>
 				          <li><Link className="btn btn-base" to="/add-property">Upload House <i className="fa fa-plus" /></Link></li>
 				        </ul>
 				      </div>

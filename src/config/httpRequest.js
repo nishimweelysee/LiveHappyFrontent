@@ -13,6 +13,7 @@ const httpRequest = async (method, url, data = null,headers=null) => {
         return { response };
 
     } catch (error) {
+        console.log({...error.response})
         let errorMessage = (error.response) ? error.response.data.message : error.message;
         if(error.response.status===401){
             errorMessage="Please First Login to perform this action ,Thank you !!!";

@@ -16,3 +16,11 @@ export const logoutAction= (type)=>{
         type
     }
 }
+
+export const updateStateData=(type,data)=>{
+    console.log(data)
+    return {
+        type:type,
+        data:data
+    };
+}

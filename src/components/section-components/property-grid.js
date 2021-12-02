@@ -8,8 +8,8 @@ const  PropertyGrid = () => {
 	let location = useLocation();
 
 	useEffect(()=>{
-		setCategory(location.state.category)
-		const {houses} = location.state.category;
+		setCategory(location.state.category || [])
+		const {houses} = location.state.category||{};
 		setHouses(houses)
 		setOgHouses(houses)
 		const $ = window.$;
@@ -61,7 +61,7 @@ const  PropertyGrid = () => {
 										<div className="product-wrap-details">
 											<div className="media">
 												<div className="author">
-													<img src={h.landLord.image ||publicUrl+"assets/img/author/1.png"} alt="img" />
+													<img className={"h-12 w-12"} src={h.landLord.image ||publicUrl+"assets/img/author/1.png"} alt="img" />
 												</div>
 												<div className="media-body">
 													<h6><Link to={{ pathname: "/property", state: { landlord:h.landLord } }}>{h.landLord.fullName}</Link></h6>

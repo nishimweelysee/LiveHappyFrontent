@@ -1,4 +1,4 @@
-import {LOGIN_SUCCESS, LOGOUT_SUCCESS, RATE} from './user.types';
+import {LOGIN_SUCCESS, LOGOUT_SUCCESS, RATE,FIND_USER_DATA} from './user.types';
 
 
 const INITIAL_STATE = {
@@ -26,6 +26,11 @@ const reducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 rate:action.rate
+            }
+        case FIND_USER_DATA:
+            return {
+                ...state,
+                data:action.data
             }
         default: return state;
     }

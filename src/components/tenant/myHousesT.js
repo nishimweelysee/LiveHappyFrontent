@@ -24,11 +24,15 @@ import { v4 as uuidv4 } from 'uuid';
 import Modal from "@material-tailwind/react/Modal";
 import ModalHeader from "@material-tailwind/react/ModalHeader";
 import ModalBody from "@material-tailwind/react/ModalBody";
-import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import {FormHelperText} from "@material-ui/core";
+import  DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
+import {value} from "lodash/seq";
+import PaymentBox from "../global-components/PaymentBox";
+import {SupervisedUserCircleSharp} from "@material-ui/icons";
+import UserProfile from "../section-components/UserProfile";
 
 
 const columns = [
@@ -56,6 +60,10 @@ const columns = [
     {
         id: 'action',
         label: 'Action',
+        align: 'center',
+    },{
+        id: 'owner',
+        label: 'Landlord',
         align: 'center',
     },
 ];
@@ -123,9 +131,31 @@ function MyHousesT(props) {
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const [monthsToPay,setMonthsToPay] = useState(0);
     const [paymentState,setPaymentState] = useState("");
-    const [halfAmount,setHalfAmount] = useState(0);
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
     const [house,setHouse] = useState({})
     const [showModal, setShowModal] = React.useState(false);
+    const [open, setOpen] = React.useState(false);
+    const [landLord,setLandlord] = useState({});
+    const [year,setYear] = useState("");
+    const [state,setState] = useState("");
+    const [ogPayment,setOgPayment] = useState([])
+    const handleFilter = (keyTerm)=>{
+        if(typeof keyTerm=="object"){
+            keyTerm =new Date(keyTerm).getFullYear();
+        }
+        setState(keyTerm)
+        let filteredPayments  = keyTerm==""?ogPayment:ogPayment.filter(pay=>pay.paymentState===keyTerm || pay.year==keyTerm);
+        setPayments([...filteredPayments])
+    }
+    const handleClickOpen = (landlord) => {
+        setLandlord({...landlord});
+        setOpen(true);
+    };
+
+    const handleCloseProfile = () => {
+        setOpen(false);
+    };
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -151,6 +181,7 @@ function MyHousesT(props) {
         const {response,error} = await httpRequest("GET",`/api/payment/${houseId}`,null,{"Authorization":`Bearer ${props.user.token}`});
         if(!error){
             setPayments([...response.data.data]);
+            setOgPayment([...response.data.data]);
             setOpenPaymentModal(true);
         }
     }
@@ -176,8 +207,7 @@ function MyHousesT(props) {
         message:"",
         numberOfMonths:monthsToPay,
         method:"",
-        payedMonth:"FEB",
-        year:"2021"
+        payedMonth:new Date()
     })
 
     const user = props.user.data;
@@ -193,17 +223,73 @@ function MyHousesT(props) {
         production: false,
         payment_options: 'card,mobilemoney,ussd',
         onSuccess: async (e) => {
-            payment.houseId= house.id;
-            payment.year= new Date().getFullYear();
-            payment.payedMonth= new Date().getMonth();
-            payment.numberOfMonths=monthsToPay;
-            payment.payedAmount=totalAmount;
-            payment.message="";
-            payment.method = e.data.transactionobject.paymentType;
-            const resp = await httpRequest("POST", `/api/payment`, { ...payment }, { "Authorization": `Bearer ${props.user.token}` })
-            console.log(resp)
-            if (!resp.error) {
-                cogoToast.success(resp.response.data.message||"");
+            console.log(e)
+            if(e.tx){
+                if(e.tx.status==="successful"){
+                    payment.houseId= house.id;
+                    payment.numberOfMonths=monthsToPay;
+                    payment.payedAmount=totalAmount;
+                    payment.payedMonth=startDate;
+                    payment.message="";
+                    payment.method = e.tx.paymentType;
+                    const resp = await httpRequest("POST", `/api/payment`, { ...payment }, { "Authorization": `Bearer ${props.user.token}` })
+                    if (!resp.error) {
+                        cogoToast.success(resp.response.data.message||"");
+                    }
+                }
+            }
+
+        },
+        onClose: () => {
+
+        }
+    };
+   const [pay,setPay]=useState({});
+    const [payment1,setPayment1] = useState({
+        id:"",
+        houseId:"",
+        payedAmount:"",
+        message:"",
+        numberOfMonths:1,
+        method:"",
+        payedMonth:""
+    })
+
+    const [showModalComplete, setShowModalComplete] = React.useState(false);
+   const handleCompletePayment = (paym)=>{
+       setPay({...paym});
+       payment1.id=paym.id;
+       payment1.houseId=paym.house;
+       payment1.payedAmount=paym.totalAmountRemained;
+       payment1.message=paym.message;
+       payment1.numberOfMonths=1;
+       payment1.method=paym.method;
+       payment1.payedMonth=paym.payments[0].payedMonth;
+       setPayment1({...payment1,...payment1})
+       setShowModalComplete(true);
+       handleClose();
+   }
+    const config1 = {
+        txref: `LHTXR_${uuidv4()}`,
+        customer_email: props.user.data.email,
+        customer_phone: props.user.data.phoneNumber,
+        amount: payment1.payedAmount,
+        PBFPubKey: process.env.REACT_APP_PUBLIC_KEY,
+        currency: "RWF",
+        orderRef: `LHODR_${uuidv4()}`,
+        subaccounts: [],
+        production: false,
+        payment_options: 'card,mobilemoney,ussd',
+        onSuccess: async (e) => {
+            console.log(e)
+            if(e.tx) {
+                if (e.tx.status === "successful") {
+                    payment1.method = e.tx.paymentType;
+                    const resp = await httpRequest("POST", `/api/payment`, { ...payment1 }, { "Authorization": `Bearer ${props.user.token}` })
+                    if (!resp.error) {
+                        cogoToast.success(resp.response.data.message||"");
+                    }
+                }
             }
         },
         onClose: () => {
@@ -251,7 +337,9 @@ function MyHousesT(props) {
                                                                </div>:
                                                            column.id==="location"?<div>
                                                                {row.district+", "+row.sector+", "+row.street}
-                                                           </div>:column.id==="houseCategory"?value.name:value
+                                                           </div>:column.id==="houseCategory"?value.name:column.id==="owner"?<div>
+                                                               <span onClick={e=>handleClickOpen(row.landLord)} className={"text-white bg-blue-600 cursor-pointer p-1 rounded"}><SupervisedUserCircleSharp/> Profile</span>
+                                                               </div>:value
                                                        }
                                                    </TableCell>
                                                );
@@ -273,6 +361,7 @@ function MyHousesT(props) {
                    />
                </Paper>
            </div>
+            <UserProfile open={open} handleClose={handleCloseProfile} userData={landLord}/>
             <div>
                 <Dialog
                     fullScreen={fullScreen}
@@ -282,26 +371,39 @@ function MyHousesT(props) {
                 >
                     <DialogTitle id="responsive-dialog-title">{"House payments"}</DialogTitle>
                     <DialogContent style={{width:fullScreen?"auto":"600px"}}>
+                        <div className="row">
+                            <div className="col-md-6">
+                                <label className="single-input-inner style-bg-border">
+                                    <span className="label">Filter by Year</span>
+                                    <DatePicker
+                                        selected={year}
+                                        onChange={(date) => {
+                                            handleFilter(date);
+                                            setYear(date);
+                                        }}
+                                        placeHolder={"Filter by Year"}
+                                        dateFormat="yyyy"
+                                        showYearPicker
+                                        className={"p-2 border-2 border-blue-500"}
+                                    />
+                                </label>
+                            </div>
+                            <div className="col-md-6">
+                                <div className="single-select-inner style-bg-border">
+                                    <span className="label">Filter by Status</span>
+                                    <Select id={"stateFilter"} className={"w-full p-2"}  value={state} onChange={e=>handleFilter(e.target.value)}>
+                                        <MenuItem  value={""}>None</MenuItem>
+                                        <MenuItem key={"FULL"} value={"FULL"}>FULL</MenuItem>
+                                        <MenuItem key={"PARTIAL"} value={"PARTIAL"}>PARTIAL</MenuItem>
+                                    </Select>
+                                </div>
+                            </div>
+                        </div>
                         <div>
                             {
                                 payments.map((pay,index)=>{
                                     return (
-                                        <div key={index} className={"flex flex-col p-2 my-2"}>
-                                            <div className={"w-full p-2 bg-gray-300 flex justify-between"}><p>This invoice dated {moment(pay.createDate).format("lll")}</p><button className={"p-1 shadow rounded bg-gray-100"}>View</button></div>
-                                            <div className={"flex flex-col gap-2 bg-gray-100"}>
-                                                <div>Tenant names : {pay.tenant.fullName}</div>
-                                                <div>Tenant Email : {pay.tenant.email}</div>
-                                                <div>Tenant phoneNumber : {pay.tenant.phoneNumber}</div>
-                                                <div>Status of payments : {pay.paymentState}</div>
-                                                <div> {pay.payments.map((p,i)=>{
-                                                    return <div className={"flex gap-1"} key={i}>
-                                                        <p>Payed Month {p.payedMonth}</p> of <p>{p.year}</p> via {p.method}
-                                                    </div>
-                                                })}</div>
-                                                <div className={"bg-blue-600 text-white p-2"}>Total amount payed : {pay.totalAmountPayed} Rwf</div>
-                                                <div className={"bg-blue-900 text-white p-2"}>Total amount Remained : {pay.totalAmountRemained} Rwf</div>
-                                            </div>
-                                        </div>
+                                        <PaymentBox className={"col-md-12"} handleCompletePayment={handleCompletePayment} index={index} pay={pay} key={index}/>
                                     )
                                 })
                             }
@@ -342,6 +444,22 @@ function MyHousesT(props) {
                             }
                         </div>
                         <div className={"flex gap-1 justify-between"}><p>How many months do you want to pay ? </p><input disabled={isMonthDisabled} value={monthsToPay} onChange={handleMonthsToPay} className={"border border-blue-500 p-2 "} type={'number'} name={"monthToPay"}/></div>
+                        <div className="flex gap-1 justify-between">
+                            <p>Select The First Month your paying  </p><div className={"flex gap-2 justify-end"}>
+                                <DatePicker
+                                    selected={startDate}
+                                    onChange={(date) => {
+                                        setStartDate(date);
+                                        payment.payedMonth=value;
+                                        setPayment({...payment,...payment});
+                                    }}
+                                    dateFormat="MM/yyyy"
+                                    showMonthYearPicker
+                                    showFullMonthYearPicker
+                                    className={"p-2 border border-blue-500"}
+                                />
+                            </div>
+                        </div>
                         <div>
                             {
                                 monthsToPay!==0 && <div className={"flex flex-col gap-2"}>
@@ -350,6 +468,7 @@ function MyHousesT(props) {
                                 </div>
                             }
                         </div>
+
                         <div className="flex gap-4 justify-center p-2">
                                 <RaveProvider {...config}>
                                     <RavePaymentButton id="ravebutton" className="bg-blue-700 rounded animated hover:fadein hover:bg-blue-400 p-1 text-white">Pay Now</RavePaymentButton>
@@ -358,7 +477,27 @@ function MyHousesT(props) {
                     </div>
                 </ModalBody>
             </Modal>
+            <Modal size="regular" active={showModalComplete} toggler={() => setShowModalComplete(false)}>
+                <ModalHeader toggler={() => setShowModalComplete(false)}>
+                    Payment Process
+                </ModalHeader>
+                <ModalBody>
+                    <div className={"flex flex-col gap-4"}>
+                        <div>
+                            <div className={"flex flex-col gap-2"}>
+                                <p>Amount to pay per month is {pay.totalAmountPayed+pay.totalAmountRemained} Rwf and you have payed {pay.totalAmountPayed}</p>
+                                <p>Total Amount to pay  is {pay.totalAmountRemained} Rwf</p>
+                            </div>
+                        </div>
 
+                        <div className="flex gap-4 justify-center p-2">
+                            <RaveProvider {...config1}>
+                                <RavePaymentButton id="ravebutton" className="bg-blue-700 rounded animated hover:fadein hover:bg-blue-400 p-1 text-white">Pay Now</RavePaymentButton>
+                            </RaveProvider>
+                        </div>
+                    </div>
+                </ModalBody>
+            </Modal>
         </TenantDashNav>
     );
 }

@@ -80,7 +80,6 @@ function Sidebar({house,rates,categories,landLord,user,average}) {
         setThree({...three,value: thre,avg: _.round(thre*min,0)});
         setTwo({...two,value: tw,avg: _.round(tw*min,0)});
         setOne({...one,value: on,avg: _.round(on*min,0)});
-        console.log(rates)
     }, [rates])
     const handleClickOpen = () => {
             setOpen(true);
@@ -110,7 +109,7 @@ function Sidebar({house,rates,categories,landLord,user,average}) {
             <div className="widget widget-author text-center">
                 <h4 className="widget-title">House Owner</h4>
                 <div className="thumb">
-                    <img src={publicUrl+"assets/img/agent/1.png"} alt="img" />
+                    <img src={landLord.image || publicUrl+"assets/img/agent/1.png"} alt="img" />
                 </div>
                 <div  className="details">
                     <h5>{landLord.fullName}</h5>
@@ -229,7 +228,7 @@ function Sidebar({house,rates,categories,landLord,user,average}) {
                 <h5 className="widget-title">Place</h5>
                 <ul>
                     {
-                        Object.keys(house).map((h,index)=>{console.log(h);
+                        Object.keys(house).map((h,index)=>{
                             return <li key={index} >{h} <span>{house[h].length}</span></li>
                         })
                     }

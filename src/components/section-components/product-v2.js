@@ -1,17 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import {httpRequest} from "../../config/httpRequest";
+import {UserContext} from "../../context/UserContext";
 
 const ProductV2=() => {
-	const [categories,setCategories] = useState([])
-	async function fetchData() {
-		const {response,error} = await httpRequest("GET","/api/category");
-		if(!error){
-			let data = response.data;
-			setCategories(data.data);
-		}
-	}
-	useEffect( ()=>{
+	const {categories,fetchData} = useContext(UserContext);
+	useEffect(()=>{
 		fetchData();
 	},[])
 	return  <div className="product-area pd-top-118 pd-bottom-90 go-top">

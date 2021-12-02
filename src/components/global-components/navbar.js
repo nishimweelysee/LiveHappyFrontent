@@ -1,12 +1,32 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {Link, withRouter} from 'react-router-dom';
 import {connect} from "react-redux";
-import {handleLogout, redirectUser} from "../helpers/functions";
+import {handleLogout} from "../helpers/functions";
+import {decodeToken} from "../../config/decodeToken";
 
 const Navbar =(props)=> {
+        let publicUrl = process.env.PUBLIC_URL+'/';
+        const [link,setLink] = useState("");
 
-        let publicUrl = process.env.PUBLIC_URL+'/'
-
+        useEffect(()=> {
+			let role = decodeToken();
+			switch (role) {
+				case "ROLE_ADMIN":
+					setLink("/admin");
+					break;
+				case "ROLE_LANDLORD":
+					setLink("/landlord")
+					break;
+				case "ROLE_TENANT":
+					setLink("/tenant");
+					break;
+				case "ROLE_COMMISSIONER":
+					setLink("/commissioner");
+					break;
+				default:
+					setLink("/");
+			}
+		},[])
         return (
         	<div className="navbar-area navbar-area-1">
 			  {/* navbar top start */}
@@ -51,7 +71,6 @@ const Navbar =(props)=> {
 			      </div>
 			      <div className="nav-right-part nav-right-part-mobile">
 			        <ul>
-			          <li><span className="search"><i className="fa fa-search" /></span></li>
 			          <li><Link className="btn btn-base" to="/add-property"><span className="btn-icon"><i className="fa fa-plus" /></span> <span className="btn-text">SUBMIT PROPERTY</span></Link></li>
 			        </ul>
 			      </div>
@@ -61,7 +80,7 @@ const Navbar =(props)=> {
 			            <Link to="/">Home</Link>
 			          </li>
 			          <li className="current-menu-item">
-						  <Link to="/property-grid">House</Link>
+						  <Link to="/find">House</Link>
 			          </li>
 			          <li className="menu-item-has-children current-menu-item">
 			            <span>Quick Links</span>
@@ -73,12 +92,12 @@ const Navbar =(props)=> {
 			            </ul>
 			          </li>
 			          <li><Link to="/contact">Contact</Link></li>
-						{props.user.isLoggedIn && <li><Link onClick={redirectUser}>Dashboard</Link></li>}
+						{props.user.isLoggedIn && <li><Link to={link}>Dashboard</Link></li>}
 			        </ul>
 			      </div>
 			      <div className="nav-right-part nav-right-part-desktop">
 			        <ul>
-			          <li><span className="search"><i className="fa fa-search" /></span></li>
+			          <li><Link to={"/find"}><i className="fa fa-search" /></Link></li>
 			          <li><Link className="btn btn-base" to="/add-property"><span className="btn-icon"><i className="fa fa-plus" /></span> <span className="btn-text">Upload House</span></Link></li>
 			        </ul>
 			      </div>
@@ -95,4 +114,4 @@ const mapStateToProps = state => {
 	}
 }
 
-export default connect(mapStateToProps)(Navbar)
+export default connect(mapStateToProps)(withRouter(Navbar))
