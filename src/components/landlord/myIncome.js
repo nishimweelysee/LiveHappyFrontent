@@ -29,6 +29,7 @@ function MyIncome(props) {
     useEffect(()=>{
         handlePayments();
     },[])
+    
     return (
         <LandLordDashNav>
             <div className="row p-4">
