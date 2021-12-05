@@ -49,7 +49,7 @@ class Footer_v2 extends Component {
 		            </div>
 		          </div>
 		        </div>
-		        <div className="col-lg-2 col-md-6">
+		        <div className="col-lg-4 col-md-6">
 		          <div className="widget widget_nav_menu">
 		            <h4 className="widget-title">Quick link</h4>
 		            <ul>

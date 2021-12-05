@@ -26,7 +26,6 @@ function MyContracts(props) {
     const getContracts = async ()=>{
         const {response,error}= await  httpRequest("GET",`/api/contract/landlord/${props.user.data.userId}`,null,{"Authorization":`Bearer ${props.user.token}`})
         if(!error){
-            console.log(response.data)
             setContracts([...response.data])
         }
     }
@@ -85,8 +84,8 @@ function MyContracts(props) {
                                     <TableCell align="center">
                                         <ol>
                                             {
-                                                row.documents.map((d)=>(
-                                                   <li>
+                                                row.documents.map((d,index)=>(
+                                                   <li key={index}>
                                                        <div key={d.id} className={"p-2 border-b border-gray-200"}><a href={`${process.env.REACT_APP_BACKEND_URL}/api/contract/files/${row.id}/${d.id}`}>{d.documentName}</a><button disabled={row.status==="Active"} onClick={e=>handleDeleteDocu(row.id,d.id)} className={"p-1 bg-red-600 hover:bg-red-300 rounded float-right text-white"}>Delete</button></div>
                                                    </li>
                                                 ))

@@ -5,7 +5,7 @@ import LandLordDashNav from "../Layout/LandLordDashNav";
 
 const AddPropertyPage = () => {
     return  <LandLordDashNav>
-        <PageHeader headertitle="Add Property"  />
+        <PageHeader parenttitle={"Dashboard"} parentlink={"/landlord"} headertitle="Add Property"  />
         <AddProperty />
     </LandLordDashNav>
 }

@@ -68,9 +68,6 @@ const CustomizedMenus=(props)=> {
     const handleClose = () => {
         setAnchorEl(null);
     };
-    useEffect(()=>{
-        console.log(user)
-    },[])
 
     return (
         <div>

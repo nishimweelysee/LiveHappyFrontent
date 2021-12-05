@@ -79,7 +79,7 @@ function Row(props) {
             setRates(rate)
         }
         let sum = _.sumBy(rate,'rates');
-        let avg =sum/rate.length;
+        let avg =isFinite(sum/rate.length)?sum/rate.length:0;
         setValue(_.round(avg,1));
         saveRate(RATE,_.round(avg,1))
         if(avg>=4 &&avg <5)
@@ -88,7 +88,7 @@ function Row(props) {
             setBackCOlor("bg-primary");
         else if(avg>=2 &&avg <3)
             setBackCOlor("bg-info");
-        else if(avg>=1 &&avg <2)
+        else if(avg>=0 &&avg <2)
             setBackCOlor("bg-warning");
         else
             setBackCOlor("bg-danger");
@@ -97,7 +97,7 @@ function Row(props) {
         let thre = _.countBy(rate,r=>r.rates>=2 && r.rates <3).true||0;
         let tw = _.countBy(rate,r=>r.rates>=1 && r.rates <2).true||0;
         let on = _.countBy(rate,r=>r.rates>=0 && r.rates <1).true||0;
-        let min = 100/rate.length;
+        let min = isFinite((100/rate.length))?(100/rate.length):0;
         setFive({...five,value: fiv,avg: _.round(fiv*min,0)});
         setFour({...four, value: fou,avg: _.round(fou*min,0)});
         setThree({...three,value: thre,avg: _.round(thre*min,0)});

@@ -130,21 +130,16 @@ function MyHouses(props) {
         let filteredPayments  = keyTerm==""?ogPayment:ogPayment.filter(pay=>pay.paymentState===keyTerm || pay.year==keyTerm);
         setPayments([...filteredPayments])
     }
-    useEffect(()=>{
-        handlePayments();
-    },[])
 
     const handleClickOpen = (action,houseId) => {
         let obj = houses.find(o => o.id === houseId);
-        console.log(houses)
-        console.log(obj)
         const {houseCategory,...data}=obj;
         setSelectedHouse({...selectedHouse,houseCategory: houseCategory.id,...data});
         if(action==="update"){
             setOpen(true);
         }
         if(action==="delete"){
-            handledelete()
+            handleDelete(houseId)
         }
     };
 
@@ -166,7 +161,6 @@ function MyHouses(props) {
     const getHouses =async ()=>{
         const {response,error}=await httpRequest("GET",'/api/landlord/house',null,{"Authorization":`Bearer ${props.user.token}`});
         if(!error){
-            console.log(response.data.data)
             setHouse(response.data.data);
         }
     }
@@ -174,8 +168,6 @@ function MyHouses(props) {
         const {response,error} = await httpRequest("GET","/api/category");
         if(!error){
             let data = response.data;
-            cogoToast.success(data.message);
-            console.log(data);
             setCategories(data.data);
         }
     }
@@ -240,8 +232,9 @@ function MyHouses(props) {
             await getHouses();
         }
     }
-    const handledelete =  async (e)=>{
-        const {response,error} = await httpRequest("DELETE","/api/house",selectedHouse,{"Authorization":`Bearer ${props.user.token}`});
+
+    const handleDelete =  async (houseId)=>{
+        const {response,error} = await httpRequest("DELETE",`/api/house/${houseId}`,null,{"Authorization":`Bearer ${props.user.token}`});
         if(!error){
             let data = response.data;
             cogoToast.success(data.message);

@@ -28,7 +28,7 @@ const Navbar =(props)=> {
 			}
 		},[])
         return (
-        	<div className="navbar-area navbar-area-1">
+        	<div className="navbar-area absolute navbar-area-1">
 			  {/* navbar top start */}
 			  <div className="navbar-top">
 			    <div className="container">

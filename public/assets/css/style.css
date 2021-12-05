@@ -766,7 +766,7 @@ ul {
     ## Breadcumb
 ------------------------------------------*/
 .breadcrumb-area {
-  padding: 172px 0 97px;
+  padding: 50px 0 20px;
   background-size: cover;
   position: relative;
   background-repeat: no-repeat;
@@ -1421,7 +1421,7 @@ ul {
 .navbar-area {
   padding: 0;
   top: 0;
-  position: absolute;
+  position: relative;
   z-index: 98;
   width: 100% !important;
   transition: all 0.4s;
